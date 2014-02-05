@@ -1,7 +1,7 @@
 {
   "name": "grunt-w3c-validation",
   "description": "W3C html and css validaton grunt plugin. Forked from https://github.com/praveenvijayan/grunt-html-validation",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "homepage": "https://github.com/mryvlin/grunt-w3c-validation",
   "author": {
     "name": "praveenvijayan",

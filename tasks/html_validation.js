@@ -120,7 +120,13 @@ module.exports = function (grunt) {
         };
 
         var validator = this;
+        counter = 0;
+
         var validate = function (files) {
+
+            if (validator){
+                var validateValidator = validator;
+            }
 
             if (files.length) {
 
@@ -261,7 +267,7 @@ module.exports = function (grunt) {
                     }
                 };
 
-                if (validator.name === cssValidation){
+                if (validateValidator.name === cssValidation){
                     w3cvalidatorConfig.validate = 'css';
                     w3cvalidatorConfig.profile = options.profile;
                     w3cvalidatorConfig.medium = options.medium;
@@ -326,7 +332,12 @@ module.exports = function (grunt) {
         }
     };
 
-    grunt.registerMultiTask(htmlValidation, 'HTML W3C validation.', validate);
-    grunt.registerMultiTask(cssValidation, 'CSS W3C validation.', validate);
+    function getValidate(validationType){
+        validate.name = validationType;
+        return validate;
+    }
+
+    grunt.registerMultiTask(htmlValidation, 'HTML W3C validation.', getValidate(htmlValidation));
+    grunt.registerMultiTask(cssValidation, 'CSS W3C validation.', getValidate(cssValidation));
 
 };
