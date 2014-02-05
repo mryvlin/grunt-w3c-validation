@@ -121,6 +121,7 @@ module.exports = function (grunt) {
 
         var validator = this;
         counter = 0;
+		reportArry = [];
 
         var validate = function (files) {
 
