@@ -1,8 +1,6 @@
-# grunt-html-validation [![Build Status](https://travis-ci.org/praveenvijayan/grunt-html-validation.png?branch=master)](https://travis-ci.org/praveenvijayan/grunt-html-validation)
+# grunt-w3c-validation
 
-[![NPM](https://nodei.co/npm/grunt-html-validation.png?downloads=true)](https://nodei.co/npm/grunt-html-validation/)
-
-> W3C html validaton grunt plugin. Validate all files in a directory automatically.
+> W3C html and css validation grunt plugin. Validate all files in a directory automatically. Forked from https://github.com/praveenvijayan/grunt-html-validation
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -10,43 +8,58 @@ This plugin requires Grunt `~0.4.1`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-html-validation --save-dev
+npm install grunt-w3c-validation --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-html-validation');
+grunt.loadNpmTasks('grunt-w3c-validation');
 ```
 
-And add to your task list using `validation`:
+And add to your task list using `html-validation` or `css-validation`:
 
 ```js
-grunt.registerTask("default", ["validation"]);
+grunt.registerTask("default", ["html-validation"]);
+grunt.registerTask("default", ["css-validation"]);
 ```
 
-## The "validation" task
+## The "*-validation" task
 
 ### Overview
-In your project's Gruntfile, add a section named `validation` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `html-validation` or `css-validation` to the data object passed into `grunt.initConfig()`.
 
 ```js
-validation: {
-		options: {
-				reset: grunt.option('reset') || false,
-				stoponerror: false,
-				remotePath: "http://decodize.com/",
-				remoteFiles: ["html/moving-from-wordpress-to-octopress/",
-											"css/site-preloading-methods/"], //or
-				remoteFiles: "validation-files.json", // JSON file contains array of page paths.
-				relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta."] //ignores these errors
-		},
-		files: {
-				src: ['<%= yeoman.app %>/*.html',
-						'!<%= yeoman.app %>/index.html',
-						'!<%= yeoman.app %>/modules.html',
-						'!<%= yeoman.app %>/404.html']
-		}
+html-validation: {
+	options: {
+		reset: grunt.option('reset') || false,
+		stoponerror: false,
+		remotePath: "http://decodize.com/",
+		remoteFiles: ["html/moving-from-wordpress-to-octopress/",
+						"css/site-preloading-methods/"], //or
+		remoteFiles: "validation-files.json", // JSON file contains array of page paths.
+		relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta."] //ignores these errors
+	},
+	files: {
+		src: ['<%= yeoman.app %>/*.html',
+			'!<%= yeoman.app %>/index.html',
+			'!<%= yeoman.app %>/modules.html',
+			'!<%= yeoman.app %>/404.html']
+	}
+}
+
+css-validation: {
+	options: {
+		reset: grunt.option('reset') || false,
+		stoponerror:false,
+		relaxerror: [],
+		profile: 'css3', // possible profiles are: none, css1, css2, css21, css3, svg, svgbasic, svgtiny, mobile, atsc-tv, tv
+		medium: 'all', // possible media are: all, aural, braille, embossed, handheld, print, projection, screen, tty, tv, presentation
+		warnings: '0' // possible warnings are: 2 (all), 1 (normal), 0 (most important), no (no warnings)
+	  },
+	  files: {
+		src: ['<%= yeoman.app %>/css/*.css']
+	  }
 }
 ```
 
@@ -216,6 +229,52 @@ Default value: `false`
 
 If true, the task will fail at the end of its run if there were any validation errors that were not ignored via `options.relaxerror`.
 
+#### options.profile
+Type: `String`<br/>
+Default value: `css3`
+
+Possible values:
+
+- ``none``
+- ``css1``
+- ``css2``
+- ``css3``
+- ``svg``
+- ``svgbasic``
+- ``svgtiny``
+- ``mobile``
+- ``atsc-tv``
+- ``tv``
+
+#### options.medium
+Type: `String`<br/>
+Default value: `all`
+
+Possible values:
+
+- ``all``
+- ``aural``
+- ``braille``
+- ``embossed``
+- ``handheld``
+- ``print``
+- ``projection``
+- ``screen``
+- ``tty``
+- ``tv``
+- ``presentation``
+
+#### options.warnings
+Type: `String`<br/>
+Default value: `no`
+
+Possible values:
+
+- ``2 (all warnings)``
+- ``1 (normal warnings)``
+- ``0 (most important warnings)``
+- ``no (no warnings)``
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
@@ -232,7 +291,3 @@ Report issues [here](https://github.com/praveenvijayan/grunt-html-validation/iss
  * 2013-08-19   v0.1.4   Fixed issues. Added 'stoponerror' option, validation report added.
  * 2013-08-05   v0.1.2   Fixed issues.
  * 2013-04-20   v0.1.0   Initial release.
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/praveenvijayan/grunt-html-validation/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

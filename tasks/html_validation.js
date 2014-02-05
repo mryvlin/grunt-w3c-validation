@@ -9,12 +9,15 @@
 
 module.exports = function (grunt) {
 
-    var w3cjs = require('w3cjs');
+    var w3cvalidator = require('w3cvalidator');
     var colors = require('colors');
     var fs = require('fs');
     var path = require('path');
     var request = require('request');
     var rval = require('../lib/remoteval');
+
+    var htmlValidation = 'html-validation';
+    var cssValidation = 'css-validation';
 
     colors.setTheme({
         silly: 'rainbow',
@@ -54,7 +57,9 @@ module.exports = function (grunt) {
         retryCount = 0,
         reportFilename = "";
 
-    grunt.registerMultiTask('validation', 'HTML W3C validation.', function () {
+
+    var validate = function() {
+
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
             path: "validation-status.json",
@@ -67,7 +72,11 @@ module.exports = function (grunt) {
             maxTry: 3,
             relaxerror: [],
             doctype: false, // Defaults false for autodetect
-            charset: false // Defaults false for autodetect
+            charset: false, // Defaults false for autodetect
+            // section for css validation
+            profile: 'css3', // possible profiles are: none, css1, css2, css21, css3, svg, svgbasic, svgtiny, mobile, atsc-tv, tv
+            medium: 'all', // possible media are: all, aural, braille, embossed, handheld, print, projection, screen, tty, tv, presentation
+            warnings: 'no' // possible warnings are: 2 (all), 1 (normal), 0 (most important), no (no warnings)
         });
 
         var done = this.async(),
@@ -110,6 +119,7 @@ module.exports = function (grunt) {
             reportArry.push(report);
         };
 
+        var validator = this;
         var validate = function (files) {
 
             if (files.length) {
@@ -136,7 +146,7 @@ module.exports = function (grunt) {
                     console.log(msg.start + filename);
                 }
 
-                var results = w3cjs.validate({
+                var w3cvalidatorConfig = {
                     file: files[counter], // file can either be a local file or a remote file
                     // file: 'http://localhost:9001/010_gul006_business_landing_o2_v11.html',
                     output: 'json', // Defaults to 'json', other option includes html
@@ -249,7 +259,16 @@ module.exports = function (grunt) {
                             validate(files);
                         }
                     }
-                });
+                };
+
+                if (validator.name === cssValidation){
+                    w3cvalidatorConfig.validate = 'css';
+                    w3cvalidatorConfig.profile = options.profile;
+                    w3cvalidatorConfig.medium = options.medium;
+                    w3cvalidatorConfig.warnings = options.warnings;
+                }
+
+                var results = w3cvalidator.validate(w3cvalidatorConfig);
             }
         };
 
@@ -262,7 +281,7 @@ module.exports = function (grunt) {
             }
         }
 
-        /*Remote validation 
+        /*Remote validation
          *Note on Remote validation.
          * W3Cjs supports remote file validation but due to some reasons it is not working as expected. Local file validation is working perfectly. To overcome this remote page is fetch using 'request' npm module and write page content in '_tempvlidation.html' file and validates as local file.
          */
@@ -305,7 +324,9 @@ module.exports = function (grunt) {
         if (!options.remoteFiles) {
             validate(files);
         }
+    };
 
-    });
+    grunt.registerMultiTask(htmlValidation, 'HTML W3C validation.', validate);
+    grunt.registerMultiTask(cssValidation, 'CSS W3C validation.', validate);
 
 };

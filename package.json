@@ -1,8 +1,8 @@
 {
-  "name": "grunt-html-validation",
-  "description": "W3C html validaton grunt plugin",
-  "version": "0.1.13",
-  "homepage": "https://github.com/praveenvijayan/grunt-html-validation",
+  "name": "grunt-w3c-validation",
+  "description": "W3C html and css validaton grunt plugin. Forked from https://github.com/praveenvijayan/grunt-html-validation",
+  "version": "0.1.14",
+  "homepage": "https://github.com/mryvlin/grunt-w3c-validation",
   "author": {
     "name": "praveenvijayan",
     "email": "praveenv.vijayan@gmail.com",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/praveenvijayan/grunt-html-validation.git"
+    "url": "git://github.com/mryvlin/grunt-w3c-validation.git"
   },
   "bugs": {
-    "url": "https://github.com/praveenvijayan/grunt-html-validation/issues"
+    "url": "https://github.com/mryvlin/grunt-w3c-validation/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/praveenvijayan/grunt-html-validation/blob/master/LICENSE-MIT"
+      "url": "https://github.com/mryvlin/grunt-w3c-validation/blob/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.js",
@@ -35,7 +35,7 @@
     "grunt": "~0.4.2"
   },
   "dependencies": {
-    "w3cjs": "~0.1.22",
+    "w3cvalidator": "~0.1.26",
     "colors": "~0.6.0",
     "request": "~2.30.0"
   },

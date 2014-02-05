@@ -32,7 +32,7 @@ module.exports = function(grunt) {
     nodeunit: {
       tests: ['test/*_test.js'],
     },
-    validation: { // Grunt w3c validation plugin
+    'html-validation': { // Grunt w3c validation plugin
         options: {
             reset: grunt.option('reset') || false,
             stoponerror:false,
@@ -51,6 +51,27 @@ module.exports = function(grunt) {
                 '!test/html/index.html',
                 '!test/html/404.html']
         }
+    },
+    'css-validation': { // Grunt w3c validation plugin
+      options: {
+          reset: grunt.option('reset') || false,
+          stoponerror:false,
+          // remotePath: "http://decodize.com/",
+          // remoteFiles: ["html/slidemote-universal-remote-control-for-html5-presentations",
+          //               "GAE/linktomob-share-your-links-quickly-and-easily-on-mobile-devices/",
+          //               "html/getting-started-with-yeoman-1-dot-0-beta-on-windows/",
+          //               "html/moving-from-wordpress-to-octopress/",
+          //               "css/site-preloading-methods/",
+          //               "html/sublime-text-2-bidirectional-language-support-plugin/"]
+          // remoteFiles: "validation-files.json",
+          relaxerror: [],
+          profile: 'css3', // possible profiles are: none, css1, css2, css21, css3, svg, svgbasic, svgtiny, mobile, atsc-tv, tv
+          medium: 'all', // possible media are: all, aural, braille, embossed, handheld, print, projection, screen, tty, tv, presentation
+          warnings: '0' // possible warnings are: 2 (all), 1 (normal), 0 (most important), no (no warnings)
+      },
+      files: {
+          src: ['test/css/*.css']
+      }
     }
 
   });
