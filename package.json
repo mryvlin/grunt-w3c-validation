@@ -1,48 +1,48 @@
 {
-  "name": "grunt-html-validation",
-  "description": "W3C html validation grunt plugin",
-  "version": "0.1.18",
-  "homepage": "https://github.com/praveenvijayan/grunt-html-validation",
-  "author": "praveenvijayan <praveenv.vijayan@gmail.com> (http://decodize.com)",
+  "name": "grunt-w3c-validation",
+  "description": "W3C html and css validaton grunt plugin. Forked from https://github.com/praveenvijayan/grunt-html-validation",
+  "version": "0.1.16",
+  "homepage": "https://github.com/mryvlin/grunt-w3c-validation",
+  "author": {
+    "name": "praveenvijayan",
+    "email": "praveenv.vijayan@gmail.com",
+    "url": "http://decodize.com"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/praveenvijayan/grunt-html-validation.git"
+    "url": "git://github.com/mryvlin/grunt-w3c-validation.git"
   },
   "bugs": {
-    "url": "https://github.com/praveenvijayan/grunt-html-validation/issues"
+    "url": "https://github.com/mryvlin/grunt-w3c-validation/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/praveenvijayan/grunt-html-validation/blob/master/LICENSE-MIT"
+      "url": "https://github.com/mryvlin/grunt-w3c-validation/blob/master/LICENSE-MIT"
     }
   ],
+  "main": "Gruntfile.js",
   "engines": {
     "node": ">= 0.8.0"
   },
   "scripts": {
     "test": "grunt test"
   },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-nodeunit": "~0.2.2",
+    "grunt": "~0.4.2"
+  },
+  "dependencies": {
+    "w3cvalidator": "~0.1.26",
+    "colors": "~0.6.0",
+    "request": "~2.30.0"
+  },
   "peerDependencies": {
     "grunt": "~0.4.1"
   },
-  "dependencies": {
-    "chalk": "^0.5.1",
-    "colors": "~0.6.2",
-    "request": "~2.40.0",
-    "w3cjs": "~0.1.25"
-  },
-  "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-contrib-clean": "~0.6.0",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-nodeunit": "~0.4.1"
-  },
   "keywords": [
     "gruntplugin"
-  ],
-  "files": [
-    "tasks",
-    "LICENSE-MIT"
   ]
 }
