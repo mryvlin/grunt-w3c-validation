@@ -333,9 +333,11 @@ module.exports = function (grunt) {
         }
     };
 
-    function getValidate(validationType){
-        validate.name = validationType;
-        return validate;
+    function getValidate(validationType) {
+        return function () {
+            this.name = validationType || validate.name;
+            validate.apply(this, arguments);
+        };
     }
 
     grunt.registerMultiTask(htmlValidation, 'HTML W3C validation.', getValidate(htmlValidation));
