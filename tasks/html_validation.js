@@ -95,7 +95,7 @@ module.exports = function (grunt) {
         };
 
         //Reset current validation status and start from scratch.
-        if (options.reset) {
+        if (options.reset && options.path) {
             grunt.file.write(options.path, '{}');
         }
 
@@ -131,7 +131,7 @@ module.exports = function (grunt) {
 
             if (files.length) {
 
-                if (grunt.file.exists(options.path)) {
+                if (options.path && grunt.file.exists(options.path)) {
                     readSettings = grunt.file.readJSON(options.path);
                 }
                 var currFileStat = readSettings[files[counter]] || false;
@@ -233,7 +233,9 @@ module.exports = function (grunt) {
 
                         }
 
-                        grunt.file.write(options.path, JSON.stringify(readSettings));
+                        if (options.path) {
+                            grunt.file.write(options.path, JSON.stringify(readSettings));
+                        }
                         // depending on the output type, res will either be a json object or a html string
                         counter++;
 
@@ -333,9 +335,11 @@ module.exports = function (grunt) {
         }
     };
 
-    function getValidate(validationType){
-        validate.name = validationType;
-        return validate;
+    function getValidate(validationType) {
+        return function () {
+            this.name = validationType || validate.name;
+            validate.apply(this, arguments);
+        };
     }
 
     grunt.registerMultiTask(htmlValidation, 'HTML W3C validation.', getValidate(htmlValidation));
